@@ -1,0 +1,49 @@
+name: Extract and Run Executable
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install 7-Zip
+      run: |
+        # Download and install 7-Zip
+        Invoke-WebRequest -Uri https://www.7-zip.org/a/7z2201-x64.exe -OutFile 7z.exe
+        Start-Process -FilePath .\7z.exe -ArgumentList "/S" -Wait
+
+    - name: Extract chromium-gost archive
+      run: |
+        # Use 7-Zip to extract the archive
+        & "C:\Program Files\7-Zip\7z.exe" x "./bin/chromium-gost-49.0.2623.112-win32-gold.7z" -o"./bin/chromium-gost" -y
+
+    - name: Install Python and Dependencies
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install Python Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install selenium
+        pip install selenium webdriver_manager
+
+    - name: Install dependencies
+      run: |
+          pip install -r requirements.txt
+        
+    - name: Run Tests
+      run: |
+        python test/autorization.py
+      shell: pwsh
+
