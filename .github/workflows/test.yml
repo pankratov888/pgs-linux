@@ -27,10 +27,6 @@ jobs:
           sudo apt-get install -y xvfb python3-pip ./bin/chromium-gost-126.0.6478.126-linux-amd64.deb
           pip3 install webdriver-manager
 
-      - name: Start Xvfb
-        run: |
-          Xvfb :99 -ac &
-          export DISPLAY=:99
 
       - name: Verify installation
         run: |
@@ -46,7 +42,5 @@ jobs:
           pip3 install selenium
 
       - name: Run Selenium Test
-        env:
-          DISPLAY: :99
         run: |
           python3 test/autorization.py
