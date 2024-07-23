@@ -26,7 +26,7 @@ jobs:
           cd ./bin
           tar -xzf linux-amd64_deb.tgz
           cd linux-amd64_deb
-          sudo install.sh
+          sudo ./install.sh
 
       - name: Установка плагина
         run: |
