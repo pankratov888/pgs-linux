@@ -12,6 +12,9 @@ from selenium.webdriver.chrome.service import Service
 # Настройки Chrome
 options = Options()
 #options.add_argument("--headless")
+options.add_argument('--disable-logging')
+options.add_argument('--disable-dev-shm-usage')
+options.add_argument('--log-level=3')
 
 # Укажите путь к вашему chromedriver для Windows
 chromedriver_path = "./bin/chromedriver"
