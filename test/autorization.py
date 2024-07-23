@@ -11,7 +11,7 @@ from selenium.webdriver.chrome.service import Service
 
 # Настройки Chrome
 options = Options()
-options.add_argument("--headless")
+#options.add_argument("--headless")
 
 # Укажите путь к вашему chromedriver для Windows
 chromedriver_path = "./bin/chromedriver"
