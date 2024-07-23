@@ -1,3 +1,5 @@
+import time
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
@@ -19,11 +21,10 @@ try:
     browser.get("http://ya.ru")
     print("Страница загружена.")
 
-    # Вывод HTML страницы для отладки
-    print(browser.page_source)
+    time.sleep(3)
 
     # Проверка наличия элемента по атрибуту data-hydration-id
-    hydration_id = "576211ff6da7ce6ac7272570289f34fc.0"
+    hydration_id = "5190d93cc2f5a9bf0738b7c6faa01986.0"
     WebDriverWait(browser, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"[data-hydration-id='{hydration_id}']")))
     print("Элемент отображается на странице.")
 
