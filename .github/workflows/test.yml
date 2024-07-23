@@ -73,8 +73,11 @@ jobs:
         run: |
           pip3 install selenium
 
-      - name: Переименовать сертификаты
-        run: mv ./bin/*.cer ./bin/*.crt
+      - name: Переименование файлов .cer на .crt в ./bin
+        run: |
+          for file in ./bin/*.cer; do
+            mv "$file" "${file%.cer}.crt"
+          done
 
       - name: Установить сертификаты
         run: |
