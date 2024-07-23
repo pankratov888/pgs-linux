@@ -26,11 +26,10 @@ options.add_argument("--disable-gpu")
 options.add_argument("--window-size=1920,1080")
 
 extension_path = './extensions/1.2.13_0.crx'
+options.add_extension(extension_path)
 if not os.path.isfile(extension_path):
     raise FileNotFoundError(f"Extension not found: {extension_path}")
 
-# Путь к расширению
-extension_path = './extensions/1.2.13_0.crx'
 options.add_extension(extension_path)
 
 
