@@ -40,10 +40,6 @@ jobs:
       - name: Install Selenium
         run: |
           pip3 install selenium
-          
-      - name: Set up ChromeDriver
-        run: |
-         chmod +x ./bin/chromedriver
 
       - name: Run Selenium Test
         run: |
