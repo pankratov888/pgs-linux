@@ -41,6 +41,12 @@ jobs:
         run: |
           pip3 install selenium
 
+      - name: Set up Xvfb
+        run: |
+         sudo apt-get install -y xvfb
+          Xvfb :99 -screen 0 1024x768x24 &
+          export DISPLAY=:99
+
       - name: Run Selenium Test
         run: |
           python3 test/autorization.py
