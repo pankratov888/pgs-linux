@@ -7,6 +7,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys
+
 
 # Установка прав на исполняемый файл ChromeDriver
 chromedriver_path = ChromeDriverManager().install()
@@ -32,15 +34,26 @@ try:
     browser.get("http://ya.ru")
     print("Страница загружена.")
 
-    time.sleep(3)
+    # Найти поле поиска
+    search_box = browser.find_element(By.NAME, 'text')  # Поле поиска на Яндекс имеет имя 'text'
 
-    # Проверка наличия элемента по атрибуту data-hydration-id
-    hydration_id = "5190d93cc2f5a9bf0738b7c6faa01986.0"
-    WebDriverWait(browser, 20).until(EC.visibility_of_element_located((By.CSS_SELECTOR, f"[data-hydration-id='{hydration_id}']")))
-    print("Элемент отображается на странице.")
+    # Ввести текст в поле поиска
+    search_text = 'Привет, мир!'
+    search_box.send_keys(search_text)
 
-except Exception as e:
-    print(f"Ошибка: {e}")
+    # Проверка, что текст введен
+    entered_text = search_box.get_attribute('value')
+    if entered_text == search_text:
+        print("Текст успешно введен в поле поиска.")
+    else:
+        print("Ошибка: введенный текст не совпадает с ожидаемым.")
+
+    # Нажать кнопку поиска (обычно это кнопка с типом submit или может быть отдельная кнопка)
+    search_box.send_keys(Keys.RETURN)  # Нажать Enter для отправки формы
+
+    # Немного подождать, чтобы увидеть результаты поиска
+    time.sleep(3)  # Подождите 3 секунды (можно настроить время ожидания в зависимости от скорости вашего соединения)
 
 finally:
+    # Закрыть браузер
     browser.quit()
