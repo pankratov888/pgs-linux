@@ -1,5 +1,5 @@
-import time
 import os
+import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
@@ -7,11 +7,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-
-# Включение логирования в Chrome
-capabilities = DesiredCapabilities.CHROME.copy()
-capabilities['goog:loggingPrefs'] = {'browser': 'ALL'}
 
 # Установка прав на исполняемый файл ChromeDriver
 chromedriver_path = ChromeDriverManager().install()
@@ -19,18 +14,17 @@ os.chmod(chromedriver_path, 0o755)
 
 # Настройки Chrome
 options = Options()
-# Убираем опцию безголового режима
-# options.add_argument("--headless")
-
-# Оставляем другие полезные опции
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
 options.add_argument("--window-size=1920,1080")
 
+# Включение логирования в Chrome
+options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
+
 # Инициализация веб-драйвера
 service = ChromeService(chromedriver_path)
-browser = webdriver.Chrome(service=service, options=options, desired_capabilities=capabilities)
+browser = webdriver.Chrome(service=service, options=options)
 
 try:
     print("Открытие страницы...")
