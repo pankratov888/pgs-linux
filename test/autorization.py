@@ -7,6 +7,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+# Включение логирования в Chrome
+capabilities = DesiredCapabilities.CHROME.copy()
+capabilities['goog:loggingPrefs'] = {'browser': 'ALL'}
 
 # Установка прав на исполняемый файл ChromeDriver
 chromedriver_path = ChromeDriverManager().install()
@@ -25,7 +30,7 @@ options.add_argument("--window-size=1920,1080")
 
 # Инициализация веб-драйвера
 service = ChromeService(chromedriver_path)
-browser = webdriver.Chrome(service=service, options=options)
+browser = webdriver.Chrome(service=service, options=options, desired_capabilities=capabilities)
 
 try:
     print("Открытие страницы...")
