@@ -28,11 +28,12 @@ jobs:
           cd linux-amd64_deb
           sudo ./install.sh
 
-      - name: Установка плагина
+      - name: Extract and Install CryptoPro CSP
         run: |
           cd ./bin
-          tar -xzf cades-linux-amd64_deb.tgz
-          cd cades-linux-amd64_deb
+          tar -xf cades-linux-amd64.tar
+          cd cades-linux-amd64
+          ls -la
           sudo dpkg -i cprocsp-pki-cades-64_2.0.14892-1_amd64.deb
           sudo dpkg -i cprocsp-pki-plugin-64_2.0.14892-1_amd64.deb
           
