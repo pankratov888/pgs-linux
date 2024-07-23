@@ -21,7 +21,7 @@ if not os.path.isfile(extension_path):
 
 # Настройки Chrome
 options = Options()
-options.add_argument("--headless")  # Отключить режим headless для отладки
+#options.add_argument("--headless")  # Отключить режим headless для отладки
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
