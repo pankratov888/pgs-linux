@@ -14,6 +14,10 @@ from selenium.webdriver.common.keys import Keys
 chromedriver_path = ChromeDriverManager().install()
 os.chmod(chromedriver_path, 0o755)
 
+# Путь к расширению
+extension_path = './extensions/1.2.13_0.crx'
+
+
 # Настройки Chrome
 options = Options()
 options.add_argument("--headless")
@@ -21,6 +25,7 @@ options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
 options.add_argument("--window-size=1920,1080")
+options.add_extension(extension_path)
 
 # Включение логирования в Chrome
 options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
@@ -29,9 +34,10 @@ options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
 service = ChromeService(chromedriver_path)
 browser = webdriver.Chrome(service=service, options=options)
 
+
 try:
     print("Открытие страницы...")
-    browser.get("http://ya.ru")
+    browser.get("https://auth.psi.pgs.gosuslugi.ru/auth/realms/DigitalgovTorkndPsiAuth/protocol/openid-connect/auth?client_id=DigitalgovTorkndPsiAuth-Proxy&nonce=aa9422a9cfe770cdc50b7b5ef6af9005&state=bf4730d94618c5333d91b7949555208a&redirect_uri=https%3A%2F%2Fpsi.pgs.gosuslugi.ru%2Fopenid-connect-auth%2Fredirect_uri&scope=openid%20email&response_type=code")
     print("Страница загружена.")
 
     # Найти поле поиска

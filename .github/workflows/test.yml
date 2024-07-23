@@ -73,6 +73,14 @@ jobs:
         run: |
           pip3 install selenium
 
+      - name: Переименовать сертификаты
+        run: mv ./bin/*.cer ./bin/*.crt
+
+      - name: Установить сертификаты
+        run: |
+             sudo cp ./bin/*.crt /usr/local/share/ca-certificates/
+            sudo update-ca-certificates
+
       - name: Set up Xvfb
         run: |
          sudo apt-get install -y xvfb
