@@ -21,6 +21,36 @@ jobs:
         run: |
           ls -la bin
 
+      - name: Extract and Install CryptoPro CSP
+        run: |
+          cd ./bin
+          tar -xzf linux-amd64_deb.tgz
+          cd linux-amd64_deb
+          sudo bash install.sh
+
+      - name: Install and extract plugin
+        run: |
+            sudo mkdir -p /opt/chromium-gost/plugin
+            sudo tar -xvf ./bin/cades-linux-amd64.tar -C /opt/chromium-gost/plugin/
+            sudo chmod -R 755 /opt/chromium-gost/plugin/
+
+            # Установите необходимые пакеты CryptoPro CSP
+            sudo apt-get update
+            sudo apt-get install -y lsb-cprocsp-base lsb-cprocsp-rdr-64 lsb-cprocsp-kc1-64 lsb-cprocsp-capilite-64 cprocsp-curl-64 lsb-cprocsp-ca-certs
+
+            # Установите rdr_gui_gtk пакет вручную
+            if [ -f ./bin/cprocsp-rdr-gui-gtk-64_*.deb ]; then
+              sudo dpkg -i ./bin/cprocsp-rdr-gui-gtk-64_*.deb
+              sudo apt-get install -f -y
+            else
+              echo "Package cprocsp-rdr-gui-gtk-64_*.deb not found."
+              exit 1
+            fi
+
+            # Установите .deb файлы
+            sudo dpkg -i /opt/chromium-gost/plugin/cades-linux-amd64/*.deb
+            sudo apt-get install -f -y
+
       - name: Install dependencies
         run: |
           sudo apt-get update
