@@ -28,6 +28,12 @@ jobs:
           cd linux-amd64_deb
           sudo ./install.sh
 
+      - name: Установка rdr-gui-gtk-64_4.0.0-4_amd64.deb
+        run: |
+          cd ./bin
+          sudo dpkg -i cprocsp-rdr-gui-gtk-64_4.0.0-4_amd64.deb
+          
+
       - name: Extract and Install CryptoPro CSP
         run: |
           cd ./bin
