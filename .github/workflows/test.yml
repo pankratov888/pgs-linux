@@ -23,11 +23,11 @@ jobs:
 
       - name: Extract and Install CryptoPro CSP
         run: |
-          cd ./bin
-          tar -xzf linux-amd64_deb.tgz
-          cd linux-amd64_deb
-          sudo cprocsp-pki-cades-64_2.0.14892-1_amd64.deb
-          sudo cprocsp-pki-plugin-64_2.0.14892-1_amd64.deb
+            cd ./bin
+            tar -xzf linux-amd64_deb.tgz
+            cd linux-amd64_deb
+            sudo dpkg -i cprocsp-pki-cades-64_2.0.14892-1_amd64.deb
+            sudo dpkg -i cprocsp-pki-plugin-64_2.0.14892-1_amd64.deb
           
 
       - name: Install dependencies
