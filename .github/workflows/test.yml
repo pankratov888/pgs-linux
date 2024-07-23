@@ -33,6 +33,10 @@ jobs:
           cd linux-amd64_deb
           sudo ./install.sh
 
+      - name: Install IFCPlugin
+        run: |
+          sudo dpkg -i ./bin/IFCPlugin-x86_64.deb
+
       - name: Установка rdr-gui-gtk-64_4.0.0-4_amd64.deb
         run: |
           cd ./bin
