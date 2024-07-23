@@ -78,8 +78,8 @@ jobs:
 
       - name: Установить сертификаты
         run: |
-             sudo cp ./bin/*.crt /usr/local/share/ca-certificates/
-            sudo update-ca-certificates
+           sudo cp ./bin/*.crt /usr/local/share/ca-certificates/
+           sudo update-ca-certificates
 
       - name: Set up Xvfb
         run: |
