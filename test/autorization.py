@@ -14,28 +14,28 @@ from selenium.webdriver.common.keys import Keys
 chromedriver_path = ChromeDriverManager().install()
 os.chmod(chromedriver_path, 0o755)
 
-
-
-
-# Настройки Chrome
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--disable-dev-shm-usage")
-chrome_options.add_argument("--disable-gpu")
-chrome_options.add_argument("--window-size=1920,1080")
-
 # Путь к расширению
 extension_path = './extensions/1.2.13_0.crx'
-chrome_options.add_extension(extension_path)
+if not os.path.isfile(extension_path):
+    raise FileNotFoundError(f"Extension not found: {extension_path}")
 
+# Настройки Chrome
+options = Options()
+options.add_argument("--headless")  # Отключить режим headless для отладки
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--disable-gpu")
+options.add_argument("--window-size=1920,1080")
+
+# Добавление расширения
+options.add_extension(extension_path)
 
 # Включение логирования в Chrome
-chrome_options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
+options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
 
 # Инициализация веб-драйвера
-browser = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-
+service = ChromeService(executable_path=chromedriver_path)
+browser = webdriver.Chrome(service=service, options=options)
 
 try:
     print("Открытие страницы...")
