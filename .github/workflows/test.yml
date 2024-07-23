@@ -1,49 +1,52 @@
-name: Extract and Run Executable
+name: Install and Run Chromium-Gost with Selenium
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build:
-    runs-on: windows-latest
+  run-chromium-gost:
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Install 7-Zip
-      run: |
-        # Download and install 7-Zip
-        Invoke-WebRequest -Uri https://www.7-zip.org/a/7z2201-x64.exe -OutFile 7z.exe
-        Start-Process -FilePath .\7z.exe -ArgumentList "/S" -Wait
+      - name: List files in root directory
+        run: |
+          ls -la
 
-    - name: Extract chromium-gost archive
-      run: |
-        # Use 7-Zip to extract the archive
-        & "C:\Program Files\7-Zip\7z.exe" x "./bin/chromium-gost-49.0.2623.112-win32-gold.7z" -o"./bin/chromium-gost" -y
+      - name: List files in bin directory
+        run: |
+          ls -la bin
 
-    - name: Install Python and Dependencies
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb python3-pip ./bin/chromium-gost-126.0.6478.126-linux-amd64.deb
+          pip3 install webdriver-manager
 
-    - name: Install Python Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install selenium
-        pip install selenium webdriver_manager
+      - name: Start Xvfb
+        run: |
+          Xvfb :99 -ac &
+          export DISPLAY=:99
 
-    - name: Install dependencies
-      run: |
-          pip install -r requirements.txt
-        
-    - name: Run Tests
-      run: |
-        python test/autorization.py
-      shell: pwsh
+      - name: Verify installation
+        run: |
+          which chromium-browser
+          chromium-browser --version
 
+      - name: Run Chromium-Gost
+        run: |
+          nohup chromium-browser &
+
+      - name: Install Selenium
+        run: |
+          pip3 install selenium
+
+      - name: Run Selenium Test
+        env:
+          DISPLAY: :99
+        run: |
+          python3 test/autorization.py

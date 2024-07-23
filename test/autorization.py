@@ -6,16 +6,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Путь к исполняемому файлу Chrome
-chrome_path = r'D:\a\test_all\test_all\bin\chromium-gost\chromium-gost-49.0.2623.112-win32\chrome.exe'
-
-
 # Настройки Chrome
 options = Options()
-options.add_argument("--disable-gpu")
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
-options.binary_location = chrome_path  # Укажите путь к исполняемому файлу Chrome
+options.add_argument("--headless")
 
 # Инициализация веб-драйвера
 service = ChromeService(ChromeDriverManager().install())
