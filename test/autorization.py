@@ -18,6 +18,8 @@ extension_path = './extensions/1.2.13_0.crx'
 if not os.path.isfile(extension_path):
     raise FileNotFoundError(f"Extension not found: {extension_path}")
 
+pem_path = './extensions/1.2.13_0.pem'
+
 # Настройки Chrome
 options = Options()
 options.add_argument("--headless")
@@ -27,6 +29,7 @@ options.add_argument("--disable-gpu")
 options.add_argument("--window-size=1920,1080")
 options.add_argument("--disable-extensions")
 options.add_extension(extension_path)
+options.add_argument(f'--ssl-client-cert={pem_path}')
 
 # Включение логирования в Chrome
 options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
