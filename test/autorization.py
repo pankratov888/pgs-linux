@@ -14,6 +14,13 @@ from selenium.webdriver.common.keys import Keys
 chromedriver_path = ChromeDriverManager().install()
 os.chmod(chromedriver_path, 0o755)
 
+# Путь к расширению
+extension_path = './extensions/1.2.13_0.crx'
+if not os.path.isfile(extension_path):
+    raise FileNotFoundError(f"Extension not found: {extension_path}")
+
+pem_path = './extensions/1.2.13_0.pem'
+
 # Настройки Chrome
 options = Options()
 options.add_argument("--headless")
@@ -21,6 +28,8 @@ options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
 options.add_argument("--window-size=1920,1080")
+options.add_argument(f'--ssl-client-cert={pem_path}')
+options.add_extension(extension_path)
 
 # Включение логирования в Chrome
 options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
