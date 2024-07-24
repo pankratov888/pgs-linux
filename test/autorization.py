@@ -9,6 +9,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
+from pyvirtualdisplay import Display
+
+# Start virtual display
+display = Display(visible=0, size=(1920, 1080))
+display.start()
 
 binary_yandex_driver_file = r'./bin/yandexdriver' # path to YandexDriver
 # Дать права на выполнение файла yandexdriver

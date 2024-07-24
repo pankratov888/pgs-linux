@@ -62,6 +62,8 @@ jobs:
           sudo apt update
           sudo apt install yandex-browser-stable
           pip3 install webdriver-manager
+          pip install pyvirtualdisplay
+          sudo apt-get install xvfb
 
 
       - name: Install Selenium
