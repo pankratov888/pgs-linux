@@ -10,31 +10,18 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 
-# Установка прав на исполняемый файл ChromeDriver
-chromedriver_path = ChromeDriverManager().install()
-os.chmod(chromedriver_path, 0o755)
+binary_yandex_driver_file = r'./bin/yandexdriver' # path to YandexDriver
 
-# Настройки Chrome
-options = Options()
-options.add_argument("--headless")
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
-options.add_argument("--disable-gpu")
-options.add_argument("--window-size=1920,1080")
+options = webdriver.ChromeOptions()
 
-# Включение логирования в Chrome
-options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
-
-# Инициализация веб-драйвера
-service = ChromeService(chromedriver_path)
-browser = webdriver.Chrome(service=service, options=options)
-
+service = ChromeService(executable_path=binary_yandex_driver_file)
+driver = webdriver.Chrome(service=service)
 
 print("Открытие страницы...")
-browser.get("http://ya.ru")
+driver.get("http://ya.ru")
 print("Страница загружена.")
 # Найти поле поиска
-search_box = browser.find_element(By.NAME, 'text')  # Поле поиска на Яндекс имеет имя 'text'
+search_box = driver.find_element(By.NAME, 'text')  # Поле поиска на Яндекс имеет имя 'text'
 
 # Ввести текст в поле поиска
 search_text = 'Привет, мир!'
@@ -54,4 +41,4 @@ search_box.send_keys(Keys.RETURN)  # Нажать Enter для отправки 
 time.sleep(3)  # Подождите 3 секунды (можно настроить время ожидания в зависимости от скорости вашего соединения)
 
 # Закрыть браузер
-browser.quit()
+driver.quit()
