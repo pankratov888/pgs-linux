@@ -11,6 +11,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from pyvirtualdisplay import Display
 
+# Путь к расширению
+extension_path = './extensions/1.2.13_0.crx'
+if not os.path.isfile(extension_path):
+    raise FileNotFoundError(f"Extension not found: {extension_path}")
+
+
 
 # Start virtual display
 display = Display(visible=0, size=(1920, 1080))
@@ -21,7 +27,7 @@ binary_yandex_driver_file = r'./bin/chromedriver' # path to YandexDriver
 os.chmod(binary_yandex_driver_file, 0o755)
 
 options = webdriver.ChromeOptions()
-
+options.add_extension(extension_path)
 
 service = ChromeService(executable_path=binary_yandex_driver_file)
 driver = webdriver.Chrome(service=service)
