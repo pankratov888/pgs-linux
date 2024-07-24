@@ -24,7 +24,8 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb python3-pip ./bin/chromium-gost-126.0.6478.126-linux-amd64.deb
+          sudo apt-get install -y xvfb 
+          python3-pip ./bin/chromium-gost-126.0.6478.126-linux-amd64.deb
           pip3 install webdriver-manager
           pip install pyvirtualdisplay
           sudo apt-get install xvfb
@@ -35,9 +36,6 @@ jobs:
           which chromium-browser
           chromium-browser --version
 
-      - name: Run Chromium-Gost
-        run: |
-          nohup chromium-browser &
 
       - name: Install Selenium
         run: |
@@ -51,4 +49,6 @@ jobs:
 
       - name: Run Selenium Test
         run: |
+          Xvfb :99 -screen 0 1920x1080x24 &
+          export DISPLAY=:99
           python3 test/autorization.py
