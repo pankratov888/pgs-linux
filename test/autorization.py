@@ -21,6 +21,7 @@ if not os.path.isfile(extension_path):
 pem_path = './extensions/1.2.13_0.pem'
 
 # Настройки Chrome
+
 options = Options()
 #options.add_argument("--headless=new")
 options.add_argument("--no-sandbox")
