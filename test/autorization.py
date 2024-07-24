@@ -10,6 +10,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 
 binary_yandex_driver_file = r'./bin/yandexdriver'
+os.chmod(binary_yandex_driver_file, 0o755)  # Сделать файл исполняемым
 # Путь к расширению
 extension_path = './extensions/1.2.13_0.crx'
 #if not os.path.isfile(extension_path):
