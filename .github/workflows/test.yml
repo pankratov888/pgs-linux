@@ -24,67 +24,27 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk2.0-0 libpango1.0-0 xvfb python3-pip pcscd libpcsclite1
-
-      - name: Установка Crypto Pro CSP
-        run: |
-          cd ./bin
-          tar -xzf linux-amd64_deb.tgz
-          cd linux-amd64_deb
-          sudo ./install.sh
-
-      - name: Install IFCPlugin
-        run: |
-          sudo dpkg -i ./bin/IFCPlugin-x86_64.deb
-
-      - name: Установка rdr-gui-gtk-64_4.0.0-4_amd64.deb
-        run: |
-          cd ./bin
-          sudo dpkg -i cprocsp-rdr-gui-gtk-64_4.0.0-4_amd64.deb
-          
-
-      - name: Extract and Install CryptoPro CSP
-        run: |
-          cd ./bin
-          tar -xf cades-linux-amd64.tar
-          cd cades-linux-amd64
-          ls -la
-          sudo dpkg -i cprocsp-pki-cades-64_2.0.14892-1_amd64.deb
-          sudo dpkg -i cprocsp-pki-plugin-64_2.0.14892-1_amd64.deb
-          
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt install curl apt-transport-https -y
-          curl -fSsL https://repo.yandex.ru/yandex-browser/YANDEX-BROWSER-KEY.GPG | sudo gpg --dearmor | sudo tee /usr/share/keyrings/yandex.gpg
-          echo deb [arch=amd64 signed-by=/usr/share/keyrings/yandex.gpg] http://repo.yandex.ru/yandex-browser/deb stable main | sudo tee /etc/apt/sources.list.d/yandex-stable.list
-          sudo apt update
-          sudo apt install yandex-browser-stable
+          sudo apt-get install -y xvfb python3-pip ./bin/chromium-gost-126.0.6478.126-linux-amd64.deb
           pip3 install webdriver-manager
-          pip install pyvirtualdisplay
-          sudo apt-get install xvfb
 
+
+      - name: Verify installation
+        run: |
+          which chromium-browser
+          chromium-browser --version
+
+      - name: Run Chromium-Gost
+        run: |
+          nohup chromium-browser &
 
       - name: Install Selenium
         run: |
           pip3 install selenium
 
-      - name: Переименование файлов .cer на .crt в ./bin
-        run: |
-          for file in ./bin/*.cer; do
-            mv "$file" "${file%.cer}.crt"
-          done
-
-      - name: Установить сертификаты
-        run: |
-           sudo cp ./bin/*.crt /usr/local/share/ca-certificates/
-           sudo update-ca-certificates
-
       - name: Set up Xvfb
         run: |
          sudo apt-get install -y xvfb
-         Xvfb :99 -screen 0 1920x1080 &
+         Xvfb :99 -screen 0 1920x1080x24 &
          export DISPLAY=:99
 
       - name: Run Selenium Test

@@ -15,7 +15,7 @@ from pyvirtualdisplay import Display
 display = Display(visible=0, size=(1920, 1080))
 display.start()
 
-binary_yandex_driver_file = r'./bin/yandexdriver' # path to YandexDriver
+binary_yandex_driver_file = r'./bin/chromedriver' # path to YandexDriver
 # Дать права на выполнение файла yandexdriver
 os.chmod(binary_yandex_driver_file, 0o755)
 
