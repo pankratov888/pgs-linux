@@ -22,7 +22,7 @@ pem_path = './extensions/1.2.13_0.pem'
 
 # Настройки Chrome
 options = Options()
-options.add_argument("--headless=chrome")
+options.add_argument("--headless=new")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
