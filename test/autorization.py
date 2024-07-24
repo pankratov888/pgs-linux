@@ -31,27 +31,9 @@ browser = webdriver.Chrome(service=service, options=options)
 
 
 print("Открытие страницы...")
-browser.get("http://ya.ru")
+browser.get("https://auth.pgs.gosuslugi.ru/auth/realms/DigitalgovTorkndProd1Auth/protocol/openid-connect/auth?client_id=DigitalgovTorkndProd1Auth-Proxy&state=b6fa62fc48c9м04787fa5bf095da2bafa&nonce=8bf3d529b0af28816d18e97bf560c4d3&response_type=code&redirect_uri=https%3A%2F%2Fpgs.gosuslugi.ru%2Fopenid-connect-auth%2Fredirect_uri&scope=openid")
 print("Страница загружена.")
-# Найти поле поиска
-search_box = browser.find_element(By.NAME, 'text')  # Поле поиска на Яндекс имеет имя 'text'
 
-# Ввести текст в поле поиска
-search_text = 'Привет, мир!'
-search_box.send_keys(search_text)
-
-# Проверка, что текст введен
-entered_text = search_box.get_attribute('value')
-if entered_text == search_text:
-    print("Текст успешно введен в поле поиска.")
-else:
-    print("Ошибка: введенный текст не совпадает с ожидаемым.")
-
-# Нажать кнопку поиска (обычно это кнопка с типом submit или может быть отдельная кнопка)
-search_box.send_keys(Keys.RETURN)  # Нажать Enter для отправки формы
-
-# Немного подождать, чтобы увидеть результаты поиска
-time.sleep(3)  # Подождите 3 секунды (можно настроить время ожидания в зависимости от скорости вашего соединения)
 
 # Закрыть браузер
 browser.quit()
