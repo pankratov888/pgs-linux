@@ -10,38 +10,28 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 
-binary_yandex_driver_file = r'./bin/yandexdriver'
-os.chmod(binary_yandex_driver_file, 0o755)  # Сделать файл исполняемым
-# Путь к расширению
-#extension_path = './extensions/1.2.13_0.crx'
-#if not os.path.isfile(extension_path):
-    #raise FileNotFoundError(f"Extension not found: {extension_path}")
+# Установка прав на исполняемый файл ChromeDriver
+chromedriver_path = ChromeDriverManager().install()
+os.chmod(chromedriver_path, 0o755)
 
-#pem_path = './extensions/1.2.13_0.pem'
+# Настройки Chrome
+options = Options()
+options.add_argument("--headless")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--disable-gpu")
+options.add_argument("--window-size=1920,1080")
 
-options = webdriver.ChromeOptions()
+# Включение логирования в Chrome
+options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
 
-service = ChromeService(executable_path=binary_yandex_driver_file)
-driver = webdriver.Chrome(service=service, options=options)
-wait = WebDriverWait(driver, 10)
-driver.implicitly_wait(10)
-options.add_argument('--headless')
-logs = driver.get_log('browser')
-network_logs = driver.get_log("browser")
-current_url = driver.current_url
+# Инициализация веб-драйвера
+service = ChromeService(chromedriver_path)
+browser = webdriver.Chrome(service=service, options=options)
 
-
-
-
-
-print("Запуск браузера...")
-driver = webdriver.Chrome(service=service, options=options)
-print("Браузер запущен успешно.")
 
 print("Открытие страницы...")
-driver.get("https://ya.ru")
+browser.get("http://ya.ru")
 print("Страница загружена.")
-
-
 # Закрыть браузер
-driver.quit()
+browser.quit()
