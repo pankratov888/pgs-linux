@@ -41,6 +41,7 @@ jobs:
         run: |
           cd ./bin
           sudo dpkg -i cprocsp-rdr-gui-gtk-64_4.0.0-4_amd64.deb
+        
           
 
       - name: Extract and Install CryptoPro CSP
