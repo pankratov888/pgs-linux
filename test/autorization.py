@@ -11,6 +11,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 
 binary_yandex_driver_file = r'./bin/yandexdriver' # path to YandexDriver
+# Дать права на выполнение файла yandexdriver
+os.chmod(binary_yandex_driver_file, 0o755)
 
 options = webdriver.ChromeOptions()
 
