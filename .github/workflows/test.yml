@@ -56,7 +56,11 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y xvfb python3-pip ./bin/chromium-gost-126.0.6478.126-linux-amd64.deb
+          sudo apt install curl apt-transport-https -y
+          curl -fSsL https://repo.yandex.ru/yandex-browser/YANDEX-BROWSER-KEY.GPG | sudo gpg --dearmor | sudo tee /usr/share/keyrings/yandex.gpg
+          echo deb [arch=amd64 signed-by=/usr/share/keyrings/yandex.gpg] http://repo.yandex.ru/yandex-browser/deb stable main | sudo tee /etc/apt/sources.list.d/yandex-stable.list
+          sudo apt update
+          sudo apt install yandex-browser-stable
           pip3 install webdriver-manager
 
 
