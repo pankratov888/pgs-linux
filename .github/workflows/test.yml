@@ -64,15 +64,6 @@ jobs:
           pip3 install webdriver-manager
 
 
-      - name: Verify installation
-        run: |
-          which chromium-browser
-          chromium-browser --version
-
-      - name: Run Chromium-Gost
-        run: |
-          nohup chromium-browser &
-
       - name: Install Selenium
         run: |
           pip3 install selenium
