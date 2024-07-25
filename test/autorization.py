@@ -17,38 +17,19 @@ chromedriver_path = ChromeDriverManager().install()
 os.chmod(chromedriver_path, 0o755)
 
 chrome_options = Options()
-#chrome_options.add_argument("--headless=new")
+chrome_options.add_argument("--headless=new")
 
 service = ChromeService(chromedriver_path)
 driver = webdriver.Chrome(options=chrome_options, service=service)
 
 wait = WebDriverWait(driver, 10)
 
-try:
-    print("Открытие страницы...")
-    driver.get("http://ya.ru")
-    print("Страница загружена.")
+print("Открытие страницы...")
+driver.get("https://demo.knd.gov.ru")
+print("Страница загружена.")
 
-    # Найти поле поиска
-    search_box = driver.find_element(By.NAME, 'text')  # Поле поиска на Яндекс имеет имя 'text'
+# Вывод HTML страницы для отладки
+print(browser.page_source)
 
-    # Ввести текст в поле поиска
-    search_text = 'Привет, мир!'
-    search_box.send_keys(search_text)
-
-    # Проверка, что текст введен
-    entered_text = search_box.get_attribute('value')
-    if entered_text == search_text:
-        print("Текст успешно введен в поле поиска.")
-    else:
-        print("Ошибка: введенный текст не совпадает с ожидаемым.")
-
-    # Нажать кнопку поиска (обычно это кнопка с типом submit или может быть отдельная кнопка)
-    search_box.send_keys(Keys.RETURN)  # Нажать Enter для отправки формы
-
-    # Немного подождать, чтобы увидеть результаты поиска
-    time.sleep(3)  # Подождите 3 секунды (можно настроить время ожидания в зависимости от скорости вашего соединения)
-
-finally:
-    # Закрыть браузер
-    driver.quit()
+# Закрыть браузер
+driver.quit()
