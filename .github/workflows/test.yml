@@ -21,37 +21,6 @@ jobs:
         run: |
           ls -la bin
           
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk2.0-0 libpango1.0-0 xvfb python3-pip pcscd libpcsclite1
-
-      - name: Установка Crypto Pro CSP
-        run: |
-          cd ./bin
-          tar -xzf linux-amd64_deb.tgz
-          cd linux-amd64_deb
-          sudo ./install.sh
-
-      - name: Install IFCPlugin
-        run: |
-          sudo dpkg -i ./bin/IFCPlugin-x86_64.deb
-
-      - name: Установка rdr-gui-gtk-64_4.0.0-4_amd64.deb
-        run: |
-          cd ./bin
-          sudo dpkg -i cprocsp-rdr-gui-gtk-64_4.0.0-4_amd64.deb
-        
-          
-
-      - name: Extract and Install CryptoPro CSP
-        run: |
-          cd ./bin
-          tar -xf cades-linux-amd64.tar
-          cd cades-linux-amd64
-          ls -la
-          sudo dpkg -i cprocsp-pki-cades-64_2.0.14892-1_amd64.deb
-          sudo dpkg -i cprocsp-pki-plugin-64_2.0.14892-1_amd64.deb
 
       - name: Install dependencies
         run: |

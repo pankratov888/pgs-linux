@@ -11,12 +11,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from pyvirtualdisplay import Display
 
-# Путь к расширению
-extension_path = './extensions/1.2.13_0.crx'
-if not os.path.isfile(extension_path):
-    raise FileNotFoundError(f"Extension not found: {extension_path}")
-pem_path = './extensions/1.2.13_0.pem'
-
 
 # Start virtual display
 display = Display(visible=0, size=(1920, 1080))
@@ -27,19 +21,17 @@ binary_yandex_driver_file = r'./bin/chromedriver' # path to YandexDriver
 os.chmod(binary_yandex_driver_file, 0o755)
 
 options = webdriver.ChromeOptions()
-options.add_extension(extension_path)
-options.add_argument(f'--ssl-client-cert={pem_path}')
 service = ChromeService(executable_path=binary_yandex_driver_file)
 driver = webdriver.Chrome(service=service)
 wait = WebDriverWait(driver, 10)
 
 print("Открытие страницы...")
-driver.get("https://auth.pgs.gosuslugi.ru/auth/realms/DigitalgovTorkndProd1Auth/protocol/openid-connect/auth?client_id=DigitalgovTorkndProd1Auth-Proxy&state=b6fa62fc48c9м04787fa5bf095da2bafa&nonce=8bf3d529b0af28816d18e97bf560c4d3&response_type=code&redirect_uri=https%3A%2F%2Fpgs.gosuslugi.ru%2Fopenid-connect-auth%2Fredirect_uri&scope=openid")
+driver.get("https://demo.knd.gov.ru/login")
 print("Страница загружена.")
 time.sleep(5)
 
 # Нажимаем кнопку "Вход через ЕСИА"
-esia_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='kc-social-providers']/ul")))
+esia_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "/html/body/app-root/evolenta-login/div/div[2]/div/div")))
 esia_button.click()
 # Ждем, чтобы страница ЕСИА загрузилась
 driver.implicitly_wait(2)
@@ -76,7 +68,7 @@ code_input.send_keys(Keys.CONTROL + 'v')  # Вставляем скопиров�
 time.sleep(5)  # Подождать 5 секунд, чтобы страница загрузилась
 driver.refresh()
 # Нажимаем кнопку "Далее"
-next_button = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/form/div/button[2]/div")))
+next_button = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/app-root/evolenta-select-branch/div/div[2]/div[2]/div/div/div[2]")))
 next_button.click()
 # Ждем, пока страница загрузится
 time.sleep(5)  # Подождать 5 секунд
