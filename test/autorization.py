@@ -29,6 +29,7 @@ driver.get("https://demo.knd.gov.ru/login")
 print("Страница загружена.")
 time.sleep(5)
 
+
 # Нажимаем кнопку "Вход через ЕСИА"
 esia_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "/html/body/app-root/evolenta-login/div/div[2]/div/div")))
 esia_button.click()
