@@ -17,7 +17,9 @@ chromedriver_path = ChromeDriverManager().install()
 os.chmod(chromedriver_path, 0o755)
 
 chrome_options = Options()
-driver = webdriver.Chrome(options=chrome_options)
+
+service = ChromeService(chromedriver_path)
+driver = webdriver.Chrome(options=chrome_options, service=service)
 
 wait = WebDriverWait(driver, 10)
 
