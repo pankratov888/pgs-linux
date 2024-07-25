@@ -17,7 +17,7 @@ chromedriver_path = ChromeDriverManager().install()
 os.chmod(chromedriver_path, 0o755)
 
 chrome_options = Options()
-chrome_options.add_argument("--headless")
+chrome_options.add_argument("--headless=new")
 
 service = ChromeService(chromedriver_path)
 driver = webdriver.Chrome(options=chrome_options, service=service)
@@ -31,8 +31,8 @@ time.sleep(5)
 
 
 # Нажимаем кнопку "Вход через ЕСИА"
-esia_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "/html/body/app-root/evolenta-login/div/div[2]/div/div")))
-esia_button.click()
+next_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH,"/html/body/app-root/evolenta-login/div/div[2]/div/div")))
+next_button.click()
 # Ждем, чтобы страница ЕСИА загрузилась
 driver.implicitly_wait(2)
 # Активация поля ввода телефона и ввод телефона
