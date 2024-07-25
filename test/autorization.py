@@ -17,7 +17,7 @@ chromedriver_path = ChromeDriverManager().install()
 os.chmod(chromedriver_path, 0o755)
 
 chrome_options = Options()
-chrome_options.add_argument("--headless=new")
+#chrome_options.add_argument("--headless=new")
 
 service = ChromeService(chromedriver_path)
 driver = webdriver.Chrome(options=chrome_options, service=service)
