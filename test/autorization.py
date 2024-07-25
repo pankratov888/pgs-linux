@@ -31,8 +31,12 @@ print("Страница загружена.")
 wait = WebDriverWait(driver, 30)
 
 try:
-    input_field = wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/esia-root/div/esia-login/div/div[1]/form/div[1]/esia-input/input")))
-    print("Элемент найден.")
+    # Ищем элемент "Вход через ЕСИА" по CSS-селектору
+    esia_login_button = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "body > app-root > evolenta-login > div > div.login-wrapper > div > div")))
+
+    # Клик по элементу
+    esia_login_button.click()
+    print("Элемент найден и нажат.")
 except TimeoutException:
     print("Ошибка: элемент не найден в течение заданного времени ожидания.")
     # Сохранение скриншота для отладки
