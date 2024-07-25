@@ -28,7 +28,7 @@ driver = webdriver.Chrome(options=chrome_options, service=service)
 print("Открытие страницы...")
 driver.get("https://demo.knd.gov.ru")
 print("Страница загружена.")
-wait = WebDriverWait(driver, 30)
+wait = WebDriverWait(driver, 10)
 
 try:
     # Ищем элемент "Вход через ЕСИА" по CSS-селектору
