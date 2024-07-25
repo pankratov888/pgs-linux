@@ -9,6 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import TimeoutException
 
 
 
@@ -22,12 +23,21 @@ chrome_options.add_argument("--headless=new")
 service = ChromeService(chromedriver_path)
 driver = webdriver.Chrome(options=chrome_options, service=service)
 
-wait = WebDriverWait(driver, 10)
+
 
 print("Открытие страницы...")
 driver.get("https://demo.knd.gov.ru")
 print("Страница загружена.")
-time.sleep(10)
+wait = WebDriverWait(driver, 30)
+
+try:
+    input_field = wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/esia-root/div/esia-login/div/div[1]/form/div[1]/esia-input/input")))
+    print("Элемент найден.")
+except TimeoutException:
+    print("Ошибка: элемент не найден в течение заданного времени ожидания.")
+    # Сохранение скриншота для отладки
+    driver.save_screenshot('screenshot.png')
+    print("Скриншот сохранен как 'screenshot.png'.")
 
 # Нажать войти
 next_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/app-root/evolenta-login/div/div[2]/div/div")))

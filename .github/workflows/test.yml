@@ -47,3 +47,10 @@ jobs:
       - name: Run Selenium Test
         run: |
           python3 test/autorization.py
+
+      - name: Upload screenshot
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: screenshot
+          path: screenshot.png
