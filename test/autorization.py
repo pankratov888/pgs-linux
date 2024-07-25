@@ -27,9 +27,43 @@ wait = WebDriverWait(driver, 10)
 print("Открытие страницы...")
 driver.get("https://demo.knd.gov.ru")
 print("Страница загружена.")
+time.sleep(10)
 
-# Вывод HTML страницы для отладки
-print(driver.page_source)
+# Нажать войти
+next_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "/html/body/app-root/evolenta-login/div/div[2]/div/div")))
+next_button.click()
+time.sleep(5)
+# Активация, заполнение поля Логин
+input_field = wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/esia-root/div/esia-login/div/div[1]/form/div[1]/esia-input/input")))
+input_field.click()
+input_field.send_keys("+79374426231")
+
+# Активация, заполнение поля Пароль
+input_field = wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/esia-root/div/esia-login/div/div[1]/form/div[2]/esia-input-password/div/input")))
+input_field.click()
+input_field.send_keys("S.pank470")
+
+# Нажимаем кнопку "Войти"
+login_button = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/esia-root/div/esia-login/div/div[1]/form/div[4]/button")))
+login_button.click()
+
+# Открываем сервис генерации TOTP-кодов в новом окне
+driver.execute_script("window.open('https://piellardj.github.io/totp-generator/?secret=AFDQSZB3NFBUCTBRSUEZ6NWCQIWCR66S&digits=6&period=30&algorithm=SHA-1')")
+driver.switch_to.window(driver.window_handles[1])
+# Находим и копируем код
+copy_button = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/main/div[3]/div/div[2]/div[1]/button")))
+copy_button.click()
+time.sleep(1)
+# Переходим обратно в первое окно
+driver.switch_to.window(driver.window_handles[0])
+# Вставляем скопированный код в поле ввода на странице авторизации
+code_input = wait.until(EC.visibility_of_element_located((By.XPATH, "/html/body/esia-root/div/esia-login/div/div/esia-enter-mfa/esia-ttp/form/div[2]/div/esia-code-input/div/code-input/span[1]/input")))
+code_input.click()
+time.sleep(1)
+code_input.send_keys(Keys.CONTROL + 'v')  # Вставляем скопированный код
+# Задержка перед переходом на следующую страницу
+time.sleep(5)  # Подождать 5 секунд, чтобы страница загрузилась
+
 
 # Закрыть браузер
 driver.quit()
