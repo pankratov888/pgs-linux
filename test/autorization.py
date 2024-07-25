@@ -29,7 +29,7 @@ driver.get("https://demo.knd.gov.ru")
 print("Страница загружена.")
 
 # Вывод HTML страницы для отладки
-print(browser.page_source)
+print(driver.page_source)
 
 # Закрыть браузер
 driver.quit()
