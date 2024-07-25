@@ -12,16 +12,25 @@ from selenium.webdriver.common.keys import Keys
 
 
 
+# Установка прав на исполняемый файл ChromeDriver
+chromedriver_path = ChromeDriverManager().install()
+os.chmod(chromedriver_path, 0o755)
 
-binary_yandex_driver_file = r'./bin/chromedriver' # path to YandexDriver
-# Дать права на выполнение файла yandexdriver
-os.chmod(binary_yandex_driver_file, 0o755)
-
-options = webdriver.ChromeOptions()
-service = ChromeService(executable_path=binary_yandex_driver_file)
-driver = webdriver.Chrome(service=service)
-wait = WebDriverWait(driver, 10)
+# Настройки Chrome
+options = Options()
 options.add_argument("--headless")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--disable-gpu")
+options.add_argument("--window-size=1920,1080")
+
+# Включение логирования в Chrome
+options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
+
+# Инициализация веб-драйвера
+service = ChromeService(chromedriver_path)
+driver = webdriver.Chrome(service=service, options=options)
+
 
 print("Открытие страницы...")
 driver.get("https://demo.knd.gov.ru/login")
