@@ -12,9 +12,6 @@ from selenium.webdriver.common.keys import Keys
 from pyvirtualdisplay import Display
 
 
-# Start virtual display
-display = Display(visible=0, size=(1920, 1080))
-display.start()
 
 binary_yandex_driver_file = r'./bin/chromedriver' # path to YandexDriver
 # Дать права на выполнение файла yandexdriver
@@ -24,6 +21,7 @@ options = webdriver.ChromeOptions()
 service = ChromeService(executable_path=binary_yandex_driver_file)
 driver = webdriver.Chrome(service=service)
 wait = WebDriverWait(driver, 10)
+options.add_argument("--headless")
 
 print("Открытие страницы...")
 driver.get("https://demo.knd.gov.ru/login")
