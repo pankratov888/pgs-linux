@@ -15,7 +15,7 @@ from pyvirtualdisplay import Display
 extension_path = './extensions/1.2.13_0.crx'
 if not os.path.isfile(extension_path):
     raise FileNotFoundError(f"Extension not found: {extension_path}")
-
+pem_path = './extensions/1.2.13_0.pem'
 
 
 # Start virtual display
@@ -28,7 +28,7 @@ os.chmod(binary_yandex_driver_file, 0o755)
 
 options = webdriver.ChromeOptions()
 options.add_extension(extension_path)
-
+options.add_argument(f'--ssl-client-cert={pem_path}')
 service = ChromeService(executable_path=binary_yandex_driver_file)
 driver = webdriver.Chrome(service=service)
 wait = WebDriverWait(driver, 10)
@@ -37,7 +37,7 @@ print("Открытие страницы...")
 driver.get("https://auth.pgs.gosuslugi.ru/auth/realms/DigitalgovTorkndProd1Auth/protocol/openid-connect/auth?client_id=DigitalgovTorkndProd1Auth-Proxy&state=b6fa62fc48c9м04787fa5bf095da2bafa&nonce=8bf3d529b0af28816d18e97bf560c4d3&response_type=code&redirect_uri=https%3A%2F%2Fpgs.gosuslugi.ru%2Fopenid-connect-auth%2Fredirect_uri&scope=openid")
 print("Страница загружена.")
 time.sleep(5)
-7
+
 # Нажимаем кнопку "Вход через ЕСИА"
 esia_button = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='kc-social-providers']/ul")))
 esia_button.click()
