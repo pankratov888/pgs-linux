@@ -24,13 +24,14 @@ options.add_argument("--disable-dev-shm-usage")
 options.add_argument("--disable-gpu")
 options.add_argument("--window-size=1920,1080")
 
+
 # Включение логирования в Chrome
 options.set_capability('goog:loggingPrefs', {'browser': 'ALL'})
 
 # Инициализация веб-драйвера
 service = ChromeService(chromedriver_path)
 driver = webdriver.Chrome(service=service, options=options)
-
+wait = WebDriverWait(driver, 10)
 
 print("Открытие страницы...")
 driver.get("https://demo.knd.gov.ru/login")
